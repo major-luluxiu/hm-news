@@ -1,13 +1,19 @@
 <template>
   <div>
-    <div class="mybutton">
+    <div class="mybutton" @click="clickFn">
       <slot></slot>
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  methods: {
+    clickFn() {
+      this.$emit("login")
+    }
+  }
+}
 </script>
 
 <style lang="less" scoped>

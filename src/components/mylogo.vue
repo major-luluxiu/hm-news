@@ -10,9 +10,9 @@ export default {}
 
 <style lang="less" scoped>
 .logo {
-  height: 100px;
+  // height: 100px;
   text-align: center;
-  line-height: 100px;
+  // line-height: 100px;
   color: red;
   margin-top: 10px;
   span {
