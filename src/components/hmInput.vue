@@ -2,7 +2,7 @@
   <div class="hm-input">
     <input
       :type="type"
-      :placeholder="placehoder"
+      :placeholder="placeholder"
       :class="{ success: status === 'success', error: status === 'error' }"
       :value="value"
       @input="inputFn"
@@ -43,7 +43,7 @@ export default {
       type: String,
       default: "text"
     },
-    placehoder: {
+    placeholder: {
       type: String,
       default: "请输入....."
     },

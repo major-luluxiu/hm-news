@@ -10,7 +10,7 @@
 export default {
   methods: {
     clickFn() {
-      this.$emit("login")
+      this.$emit("click")
     }
   }
 }

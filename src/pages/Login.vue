@@ -4,7 +4,7 @@
     <mylogo></mylogo>
     <hminput
       type="text"
-      placehoder="请输入用户名"
+      placeholder="请输入用户名"
       v-model="username"
       :rule="/^1\d{4,10}$/"
       message="用户名格式不对"
@@ -13,13 +13,16 @@
 
     <hminput
       type="password"
-      placehoder="请输入密码"
+      placeholder="请输入密码"
       v-model="password"
       :rule="/^\d{3,12}$/"
       message="用户密码格式错误"
       ref="password"
     ></hminput>
-    <mybutton @login="login">登录</mybutton>
+    <mybutton @click="login">登录</mybutton>
+    <div class="to-register">
+      没有账号?<router-link to="/register">去注册</router-link>
+    </div>
   </div>
 </template>
 
@@ -55,8 +58,20 @@ export default {
       username: "",
       password: ""
     }
+  },
+  created() {
+    this.username = this.$route.params.username
+    this.password = this.$route.params.password
   }
 }
 </script>
 
-<style lang="less"></style>
+<style lang="less" scoped>
+.to-register {
+  padding: 10px 10px;
+  text-align: right;
+  a {
+    color: red;
+  }
+}
+</style>
