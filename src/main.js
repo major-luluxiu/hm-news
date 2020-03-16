@@ -2,6 +2,9 @@ import Vue from "vue"
 import App from "./App.vue"
 import router from "./router/router"
 import axios from "axios"
+import { Toast } from "vant"
+
+Vue.use(Toast)
 
 import "./styles/base.less"
 import "./styles/iconfont.less"
