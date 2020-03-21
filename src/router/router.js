@@ -8,6 +8,7 @@ import Register from "../pages/Register.vue"
 import User from "../pages/User.vue"
 import Edit from "../pages/Edit.vue"
 import Myfollows from "../pages/Myfollows.vue"
+import Comment from "../pages/Comment.vue"
 
 const router = new VueRouter({
   routes: [
@@ -16,7 +17,8 @@ const router = new VueRouter({
     { path: "/register", component: Register },
     { path: "/user", component: User },
     { path: "/edit", name: "edit", component: Edit },
-    { path: "/follows", name: "follows", component: Myfollows }
+    { path: "/follows", name: "follows", component: Myfollows },
+    { path: "/comment", name: "comment", component: Comment }
   ]
 })
 

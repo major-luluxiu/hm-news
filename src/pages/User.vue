@@ -22,8 +22,12 @@
       content="我的关注"
       @click="$router.push('/follows')"
     ></hm-navbar>
+    <hm-navbar
+      title="我的跟帖"
+      content="喜欢/评论"
+      @click="$router.push('/comment')"
+    ></hm-navbar>
     <hm-navbar title="我的收藏" content="文章"></hm-navbar>
-    <hm-navbar title="我的点赞" content="喜欢/评论"></hm-navbar>
     <hm-navbar title="设置" @click="$router.push('/edit')"></hm-navbar>
     <hm-navbar title="退出" @click="logout"></hm-navbar>
   </div>
