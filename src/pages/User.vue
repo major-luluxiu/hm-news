@@ -1,16 +1,17 @@
 <template>
   <div>
     <myheader>个人中心</myheader>
-    <div class="info">
+    <div class="info" @click="$router.push('/edit')">
       <div class="left">
-        <img src="../images/小黄鸡.jpg" alt="" />
+        <img :src="$axios.defaults.baseURL + info.head_img" alt="" />
       </div>
       <div class="center">
         <div class="name">
-          <span class="iconfont iconxingbienan"></span>
-          <span class="sex">火星男</span>
+          <span v-if="info.gender === 1" class="iconfont iconxingbienan"></span>
+          <span v-else class="iconfont iconxingbienv"></span>
+          <span class="sex">{{ info.nickname }}</span>
         </div>
-        <span class="time">2020-03-16</span>
+        <span class="time">{{ info.create_date | date }}</span>
       </div>
       <div class="right">
         <span class="iconfont iconjiantou1"></span>
@@ -18,12 +19,51 @@
     </div>
     <hm-navbar title="关注" content="我的关注"></hm-navbar>
     <hm-navbar title="我的收藏" content="文章"></hm-navbar>
-    <hm-navbar title="设置"></hm-navbar>
+    <hm-navbar title="我的点赞" content="喜欢/评论"></hm-navbar>
+    <hm-navbar title="设置" @click="$router.push('/edit')"></hm-navbar>
+    <hm-navbar title="退出" @click="logout"></hm-navbar>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  created() {
+    const token = localStorage.getItem("token")
+    const user_id = localStorage.getItem("user_id")
+    this.$axios({
+      method: "get",
+      url: `/user/${user_id}`
+    }).then(res => {
+      const { statusCode, data } = res.data
+      if (statusCode === 200) {
+        this.info = data
+      }
+    })
+  },
+  data() {
+    return {
+      info: {}
+    }
+  },
+  methods: {
+    logout() {
+      this.$dialog
+        .confirm({
+          title: "温馨提示",
+          message: "确定退出吗?"
+        })
+        .then(() => {
+          localStorage.removeItem("token")
+          localStorage.removeItem("user_id")
+          this.$router.push("/login")
+          this.$toast.success("退出成功")
+        })
+        .catch(() => {
+          this.$toast("取消退出")
+        })
+    }
+  }
+}
 </script>
 
 <style lang="less" scoped>

@@ -44,11 +44,15 @@ export default {
           password: this.password
         }
       }).then(res => {
-        if (res.data.statusCode === 200) {
-          this.$toast.success("登录成功")
+        const { data, statusCode, message } = res.data
+
+        if (statusCode === 200) {
+          localStorage.setItem("token", data.token)
+          localStorage.setItem("user_id", data.user.id)
+          this.$toast.success(message)
           this.$router.push("/user")
         } else {
-          this.$toast.fail("登录失败")
+          this.$toast.fail(message)
         }
       })
     }
