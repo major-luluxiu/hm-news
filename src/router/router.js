@@ -7,6 +7,7 @@ import Login from "../pages/Login.vue"
 import Register from "../pages/Register.vue"
 import User from "../pages/User.vue"
 import Edit from "../pages/Edit.vue"
+import Myfollows from "../pages/Myfollows.vue"
 
 const router = new VueRouter({
   routes: [
@@ -14,12 +15,13 @@ const router = new VueRouter({
     { path: "/login", name: "login", component: Login },
     { path: "/register", component: Register },
     { path: "/user", component: User },
-    { path: "/edit", name: "edit", component: Edit }
+    { path: "/edit", name: "edit", component: Edit },
+    { path: "/follows", name: "follows", component: Myfollows }
   ]
 })
 
 // 将所有需要权限的路由放到数组中
-const authURL = ["/user", "/edit"]
+const authURL = ["/user", "/edit", "/follows"]
 
 router.beforeEach(function(to, from, next) {
   const token = localStorage.getItem("token")

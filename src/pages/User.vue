@@ -17,7 +17,11 @@
         <span class="iconfont iconjiantou1"></span>
       </div>
     </div>
-    <hm-navbar title="关注" content="我的关注"></hm-navbar>
+    <hm-navbar
+      title="关注"
+      content="我的关注"
+      @click="$router.push('/follows')"
+    ></hm-navbar>
     <hm-navbar title="我的收藏" content="文章"></hm-navbar>
     <hm-navbar title="我的点赞" content="喜欢/评论"></hm-navbar>
     <hm-navbar title="设置" @click="$router.push('/edit')"></hm-navbar>
