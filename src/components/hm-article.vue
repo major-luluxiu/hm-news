@@ -2,38 +2,38 @@
   <div>
     <div class="list">
       <!--  单张图片-->
-      <div class="single" v-if="item.cover.length < 3">
+      <div class="single" v-if="post.cover.length < 3 && post.type === 1">
         <div class="info">
-          <div class="title">{{ item.title }}</div>
+          <div class="title">{{ post.title }}</div>
           <div class="personal">
             <span class="name">火星时报</span>
-            <span class="number">{{ item.comments.length }} 跟帖</span>
+            <span class="number">{{ post.comments.length }} 跟帖</span>
           </div>
         </div>
         <div class="avatar">
-          <img :src="item.cover[0].url" alt />
+          <img :src="filterUrl(post.cover[0].url)" alt />
         </div>
       </div>
 
       <!-- 三张图片 -->
-      <div class="multiple" v-else-if="item.cover.length >= 3">
-        <div class="title">{{ item.title }}</div>
+      <div class="multiple" v-else-if="post.cover.length >= 3">
+        <div class="title">{{ post.title }}</div>
         <div class="covers">
-          <img :src="item.cover[0].url" alt />
-          <img :src="item.cover[1].url" alt />
-          <img :src="item.cover[2].url" alt />
+          <img :src="filterUrl(post.cover[0].url)" alt />
+          <img :src="filterUrl(post.cover[1].url)" alt />
+          <img :src="filterUrl(post.cover[2].url)" alt />
         </div>
         <div class="personal">
           <span class="name">火星时报</span>
-          <span class="number">{{ item.comments.length }} 跟帖</span>
+          <span class="number">{{ post.comments.length }} 跟帖</span>
         </div>
       </div>
 
       <!-- 视频 -->
       <div class="radio" v-else>
-        <div class="title">{{ item.title }}</div>
+        <div class="title">{{ post.title }}</div>
         <div class="cover">
-          <img src="item.cover[0].url " alt="" />
+          <img :src="filterUrl(post.cover[0].url)" alt="" />
           <div class="tip">
             <span class="iconfont iconshipin"></span>
           </div>
@@ -45,7 +45,16 @@
 
 <script>
 export default {
-  props: ["item"]
+  props: ["post"],
+  methods: {
+    filterUrl(url) {
+      if (url.startsWith("http")) {
+        return url
+      } else {
+        return this.$axios.defaults.baseURL + url
+      }
+    }
+  }
 }
 </script>
 
@@ -119,13 +128,17 @@ export default {
     .tip {
       width: 55px;
       height: 55px;
+      line-height: 55px;
+      border-radius: 50%;
       position: absolute;
+      background-color: rgb(200, 200, 200, 0.5);
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
-      background-color: rgb(225, 225, 225, 0.5);
+      text-align: center;
       .iconshipin {
-        background-color: #ffffff;
+        color: #ffff;
+        font-size: 47px;
       }
     }
   }

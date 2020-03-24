@@ -18,7 +18,9 @@ import {
   Uploader,
   Button,
   List,
-  PullRefresh
+  PullRefresh,
+  Tab,
+  Tabs
 } from "vant"
 
 // 引用插件
@@ -33,6 +35,8 @@ Vue.use(Uploader)
 Vue.use(Button)
 Vue.use(List)
 Vue.use(PullRefresh)
+Vue.use(Tab)
+Vue.use(Tabs)
 
 // 引入的样式
 import "./styles/base.less"
@@ -73,7 +77,9 @@ axios.interceptors.response.use(res => {
 // axios的请求拦截
 axios.interceptors.request.use(config => {
   const token = localStorage.getItem("token")
-  config.headers.Authorization = token
+  if (token) {
+    config.headers.Authorization = token
+  }
   return config
 })
 // 拼接axios基础路径

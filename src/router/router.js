@@ -10,17 +10,20 @@ import Edit from "../pages/Edit.vue"
 import Myfollows from "../pages/Myfollows.vue"
 import Comment from "../pages/Comment.vue"
 import Myfavorite from "../pages/Myfavorite.vue"
+import Home from "../pages/Home.vue"
+import Search from "../pages/Search.vue"
 
 const router = new VueRouter({
   routes: [
-    { path: "/", redirect: "/login" },
+    { path: "/", name: "home", component: Home },
     { path: "/login", name: "login", component: Login },
     { path: "/register", component: Register },
     { path: "/user", component: User },
     { path: "/edit", name: "edit", component: Edit },
     { path: "/follows", name: "follows", component: Myfollows },
     { path: "/comment", name: "comment", component: Comment },
-    { path: "/favorite", name: "favorite", component: Myfavorite }
+    { path: "/favorite", name: "favorite", component: Myfavorite },
+    { path: "/search", name: "search", component: Search }
   ]
 })
 
