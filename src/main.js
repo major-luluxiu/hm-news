@@ -16,7 +16,9 @@ import {
   CellGroup,
   Cell,
   Uploader,
-  Button
+  Button,
+  List,
+  PullRefresh
 } from "vant"
 
 // 引用插件
@@ -29,6 +31,9 @@ Vue.use(Cell)
 Vue.use(CellGroup)
 Vue.use(Uploader)
 Vue.use(Button)
+Vue.use(List)
+Vue.use(PullRefresh)
+
 // 引入的样式
 import "./styles/base.less"
 import "./styles/iconfont.less"
@@ -40,6 +45,7 @@ import MyLogo from "./components/mylogo.vue"
 import MyButton from "./components/mybutton.vue"
 import HmInput from "./components/hmInput.vue"
 import HmNavbar from "./components/hm-navbar.vue"
+import HmArticle from "./components/hm-article.vue"
 
 // 注册全局组件
 Vue.component("myheader", MyHeader)
@@ -47,6 +53,7 @@ Vue.component("mylogo", MyLogo)
 Vue.component("mybutton", MyButton)
 Vue.component("hminput", HmInput)
 Vue.component("hm-navbar", HmNavbar)
+Vue.component("hm-article", HmArticle)
 
 // 消除控制台提示
 Vue.config.productionTip = false

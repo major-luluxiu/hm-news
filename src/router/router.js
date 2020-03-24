@@ -9,6 +9,7 @@ import User from "../pages/User.vue"
 import Edit from "../pages/Edit.vue"
 import Myfollows from "../pages/Myfollows.vue"
 import Comment from "../pages/Comment.vue"
+import Myfavorite from "../pages/Myfavorite.vue"
 
 const router = new VueRouter({
   routes: [
@@ -18,12 +19,13 @@ const router = new VueRouter({
     { path: "/user", component: User },
     { path: "/edit", name: "edit", component: Edit },
     { path: "/follows", name: "follows", component: Myfollows },
-    { path: "/comment", name: "comment", component: Comment }
+    { path: "/comment", name: "comment", component: Comment },
+    { path: "/favorite", name: "favorite", component: Myfavorite }
   ]
 })
 
 // 将所有需要权限的路由放到数组中
-const authURL = ["/user", "/edit", "/follows"]
+const authURL = ["/user", "/edit", "/follows", "/favorite"]
 
 router.beforeEach(function(to, from, next) {
   const token = localStorage.getItem("token")

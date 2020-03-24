@@ -27,7 +27,11 @@
       content="喜欢/评论"
       @click="$router.push('/comment')"
     ></hm-navbar>
-    <hm-navbar title="我的收藏" content="文章"></hm-navbar>
+    <hm-navbar
+      title="我的收藏"
+      content="文章"
+      @click="$router.push('/favorite')"
+    ></hm-navbar>
     <hm-navbar title="设置" @click="$router.push('/edit')"></hm-navbar>
     <hm-navbar title="退出" @click="logout"></hm-navbar>
   </div>
