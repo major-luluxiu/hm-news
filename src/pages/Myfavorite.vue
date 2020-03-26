@@ -1,7 +1,7 @@
 <template>
   <div>
     <myheader>我的收藏</myheader>
-    <hm-article :item="item" v-for="item in list" :key="item.id"></hm-article>
+    <hm-article :post="item" v-for="item in list" :key="item.id"></hm-article>
   </div>
 </template>
 
@@ -19,9 +19,11 @@ export default {
     async getList() {
       try {
         const res = await this.$axios.get("/user_star")
+        console.log(res)
         const { data, statusCode } = res.data
         if (statusCode === 200) {
           this.list = data
+          console.log(this.list)
         }
       } catch (err) {
         console.log(err)

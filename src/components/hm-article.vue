@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="list">
+    <div class="list" @click="$router.push(`/detail/${post.id}`)">
       <!--  单张图片-->
       <div class="single" v-if="post.cover.length < 3 && post.type === 1">
         <div class="info">

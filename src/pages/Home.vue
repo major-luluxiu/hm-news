@@ -18,11 +18,23 @@
       <!-- 导航条 -->
       <van-tabs v-model="active" sticky animated background="#E4E4E4" swipeable>
         <van-tab :title="item.name" v-for="item in tabList" :key="item.id">
-          <hm-article
-            v-for="post in postList"
-            :key="post.id"
-            :post="post"
-          ></hm-article>
+          <!-- 下拉刷新 -->
+          <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+            <!-- 上拉加载 -->
+            <van-list
+              v-model="loading"
+              :finished="finished"
+              finished-text="没有更多了"
+              @load="onLoad"
+              :immediate-check="false"
+            >
+              <hm-article
+                v-for="post in postList"
+                :key="post.id"
+                :post="post"
+              ></hm-article>
+            </van-list>
+          </van-pull-refresh>
         </van-tab>
       </van-tabs>
     </div>
@@ -37,7 +49,10 @@ export default {
       tabList: [],
       postList: [],
       pageIndex: 1,
-      pageSize: 10
+      pageSize: 10,
+      loading: false,
+      finished: false,
+      refreshing: false
     }
   },
   created() {
@@ -60,19 +75,46 @@ export default {
           pageSize: this.pageSize
         }
       })
+      if (this.postList.length > 0 && this.pageIndex === 1) {
+        this.postList = []
+      }
       const { data, statusCode } = res.data
       if (statusCode === 200) {
         data.forEach(item => {
           item.comments = item.comment_length
         })
-        this.postList = data
+        this.postList = [...this.postList, ...data]
+        this.loading = false
+        if (data.length < this.pageSize) {
+          this.finished = true
+        }
       }
+    },
+    onLoad() {
+      this.pageIndex++
+      setTimeout(() => {
+        this.getPost(this.tabList[this.active].id)
+      }, 1000)
+    },
+    onRefresh() {
+      this.pageIndex = 1
+      setTimeout(() => {
+        this.getPost(this.tabList[this.active].id)
+      }, 1000)
+      this.refreshing = false
+      this.finished = false
     }
   },
   watch: {
     active(value) {
+      this.postList = []
+      this.pageIndex = 1
+      this.finished = false
+      this.loading = true
       const id = this.tabList[value].id
-      this.getPost(id)
+      setTimeout(() => {
+        this.getPost(id)
+      }, 1000)
     }
   }
 }

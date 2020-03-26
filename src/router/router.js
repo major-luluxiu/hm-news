@@ -12,6 +12,7 @@ import Comment from "../pages/Comment.vue"
 import Myfavorite from "../pages/Myfavorite.vue"
 import Home from "../pages/Home.vue"
 import Search from "../pages/Search.vue"
+import Detail from "../pages/Detail.vue"
 
 const router = new VueRouter({
   routes: [
@@ -23,7 +24,8 @@ const router = new VueRouter({
     { path: "/follows", name: "follows", component: Myfollows },
     { path: "/comment", name: "comment", component: Comment },
     { path: "/favorite", name: "favorite", component: Myfavorite },
-    { path: "/search", name: "search", component: Search }
+    { path: "/search", name: "search", component: Search },
+    { path: "/detail/:id", name: "detail", component: Detail }
   ]
 })
 

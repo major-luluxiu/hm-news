@@ -50,7 +50,13 @@ export default {
           localStorage.setItem("token", data.token)
           localStorage.setItem("user_id", data.user.id)
           this.$toast.success(message)
-          this.$router.push("/user")
+          const forced = this.$route.params.forced
+          const id = this.$route.params.id
+          if (forced === true) {
+            this.$router.back()
+          } else {
+            this.$router.push("/user")
+          }
         } else {
           this.$toast.fail(message)
         }
