@@ -7,7 +7,7 @@
           <div class="title">{{ post.title }}</div>
           <div class="personal">
             <span class="name">火星时报</span>
-            <span class="number">{{ post.comments.length }} 跟帖</span>
+            <span class="number">{{ post.comments || 0 }} 跟帖</span>
           </div>
         </div>
         <div class="avatar">
@@ -16,7 +16,7 @@
       </div>
 
       <!-- 三张图片 -->
-      <div class="multiple" v-else-if="post.cover.length >= 3">
+      <div class="multiple" v-else-if="post.cover_length >= 3">
         <div class="title">{{ post.title }}</div>
         <div class="covers">
           <img :src="filterUrl(post.cover[0].url)" alt />
@@ -25,7 +25,7 @@
         </div>
         <div class="personal">
           <span class="name">火星时报</span>
-          <span class="number">{{ post.comments.length }} 跟帖</span>
+          <span class="number">{{ post.comments || 0 }} 跟帖</span>
         </div>
       </div>
 
@@ -37,6 +37,10 @@
           <div class="tip">
             <span class="iconfont iconshipin"></span>
           </div>
+        </div>
+        <div class="personal">
+          <span class="name">火星时报</span>
+          <span class="number">{{ post.comments || 0 }} 跟帖</span>
         </div>
       </div>
     </div>
@@ -122,7 +126,7 @@ export default {
     margin-bottom: 10px;
     img {
       display: block;
-      width: 360px;
+      width: 100%;
       height: 170px;
     }
     .tip {

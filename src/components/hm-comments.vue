@@ -3,24 +3,60 @@
     <!-- 头部 -->
     <div class="header">
       <div class="left">
-        <img src="../images/小黄鸡.jpg" alt="" />
+        <img
+          :src="$axios.defaults.baseURL + commentsList.user.head_img"
+          alt=""
+        />
       </div>
       <div class="center">
-        <div class="nickname">火星网友</div>
-        <div class="date">2小时前</div>
+        <div class="nickname">{{ commentsList.user.nickname }}</div>
+        <div class="date">{{ commentsList.create_date | date2 }}</div>
       </div>
-      <div class="right">回复</div>
+      <div
+        class="right"
+        @click="reply(commentsList.id, commentsList.user.nickname)"
+      >
+        回复
+      </div>
     </div>
 
+    <!-- 楼层跟帖 -->
+    <hm-floor
+      v-if="commentsList.parent"
+      :comment="commentsList.parent"
+      :count="order(0, commentsList)"
+      @reply="reply"
+    ></hm-floor>
     <!--跟帖 -->
     <div class="content">
-      文章说得很有的道理
+      {{ commentsList.content }}
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+import hmFloor from "../components/hm-floor"
+
+export default {
+  props: ["commentsList"],
+  methods: {
+    // 回复
+    reply(id, nickname) {
+      this.$emit("reply", id, nickname)
+    },
+    // 帖子排序
+    order(num, obj) {
+      if (obj.parent) {
+        return this.order(num + 1, obj.parent)
+      } else {
+        return num
+      }
+    }
+  },
+  components: {
+    "hm-floor": hmFloor
+  }
+}
 </script>
 
 <style lang="less" scoped>
@@ -49,9 +85,12 @@ export default {}
       }
       .date {
         color: rgb(0, 0, 0, 0.54);
-        font-size: 13px;
+        font-size: 10px;
       }
     }
+  }
+  .content {
+    margin-top: 10px;
   }
 }
 </style>

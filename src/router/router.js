@@ -44,4 +44,5 @@ router.beforeEach(function(to, from, next) {
     next()
   }
 })
+
 export default router

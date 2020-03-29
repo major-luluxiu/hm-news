@@ -4,8 +4,25 @@ import router from "./router/router"
 import axios from "axios"
 import moment from "moment"
 
+// 过滤器
 Vue.filter("date", function(input) {
   return moment(input).format("YYYY-MM-DD")
+})
+
+Vue.filter("date2", function(input) {
+  const oldTime = new Date(input)
+  const now = new Date()
+  const minutes = (now - oldTime) / 1000 / 60
+  const hours = ((now - oldTime) / 1000 / 60 / 60) | 0
+  if (minutes <= 10) {
+    return "刚刚"
+  } else if (minutes <= 60 && minutes > 10) {
+    return "1小时前"
+  } else if (hours <= 24 && hours > 1) {
+    return `${hours}小时前`
+  } else {
+    return moment(input).format("YYYY-MM-DD HH:mm:ss")
+  }
 })
 import {
   Toast,

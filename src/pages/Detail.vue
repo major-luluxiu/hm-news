@@ -34,7 +34,7 @@
         v-if="detailList.type === 1"
       ></div>
 
-      <video :src="detailList.content" v-else autoplay controles></video>
+      <video :src="detailList.content" v-else autoplay controls></video>
 
       <div class="btns">
         <div class="btn like" @click="iLike(detailList.id)">
@@ -54,7 +54,12 @@
     <div class="jingcai">
       精彩跟帖
     </div>
-    <hm-comments></hm-comments>
+    <hm-comments
+      v-for="item in commentsList"
+      :key="item.id"
+      :commentsList="item"
+      @reply="reply"
+    ></hm-comments>
 
     <!-- 更多跟帖 -->
     <div class="more">
@@ -66,7 +71,7 @@
     <div class="footer">
       <div class="inputaa" v-show="isShow">
         <div class="input">
-          <input type="text" placeholder="回复" @focus="inputFocus" />
+          <input type="text" placeholder="回复:" @click="inputFocus" />
         </div>
         <div class="count">
           <span class=" iconfont iconpinglun-"> </span>
@@ -81,15 +86,17 @@
       </div>
       <div class="txtarea" v-show="!isShow">
         <textarea
-          placeholder="回复"
+          :placeholder="
+            `${commentNickname ? '回复:' : '评论:'} ${commentNickname}`
+          "
           ref="txtarea"
           @blur="outfocus"
           v-model="content"
         ></textarea>
-        <div class="send" @click="reply">发送</div>
+        <div class="send" @click="addComment">发送</div>
       </div>
     </div>
-    <div class="empty" v-show="!isShow"></div>
+    <div class="empty"></div>
   </div>
 </template>
 
@@ -102,13 +109,17 @@ export default {
       detailList: {
         user: {}
       },
+      commentsList: [],
       isShow: true,
       content: "",
-      parentId: ""
+      parentId: "",
+      commentId: "",
+      commentNickname: ""
     }
   },
   created() {
     this.getDetail()
+    this.getComments()
   },
   components: {
     hmComments
@@ -122,7 +133,17 @@ export default {
       this.detailList = data
       console.log(this.detailList)
     },
-    // 关注
+    // 获取评论
+    async getComments() {
+      const id = this.$route.params.id
+      const res = await this.$axios.get(`/post_comment/${id}`)
+      const { statusCode, data } = res.data
+      if (statusCode === 200) {
+        this.commentsList = data
+        console.log(this.commentsList)
+      }
+    },
+    // 点击关注
     follow(id) {
       const token = localStorage.getItem("token")
       if (!token) {
@@ -150,7 +171,7 @@ export default {
         })
       }
     },
-    // 取关
+    // 点击取关
     async unfollow(id) {
       const res = await this.$axios.get(`/user_unfollow/${id}
 `)
@@ -179,13 +200,18 @@ export default {
     outfocus() {
       if (!this.content) {
         this.isShow = !this.isShow
+        this.commentNickname = ""
+        this.commentId = ""
+        this.content = ""
       }
     },
     // 发送评论
-    async reply() {
+    async addComment() {
       if (!this.content.trim()) {
-        this.$toast("评论不能为空哦")
+        this.$toast("请输入内容")
         this.isShow = !this.isShow
+        this.content = ""
+        return
       }
       const id = this.detailList.id
       const res = await this.$axios.post(`/post_comment/${id}`, {
@@ -195,10 +221,16 @@ export default {
       const { statusCode, message } = res.data
       if (statusCode === 200) {
         this.getDetail()
-        this.$$toast(message)
+        this.getComments()
+        this.$toast(message)
       }
+      this.commentId = ""
+      this.commentNickname = ""
+      this.parentId = ""
+      this.content = ""
+      this.isShow = !this.isShow
     },
-    // 收藏
+    // 点击收藏
     async star() {
       const res = await this.$axios.get(`/post_star/${this.detailList.id}`)
       const { statusCode, message } = res.data
@@ -206,6 +238,14 @@ export default {
         this.$toast(message)
         this.getDetail()
       }
+    },
+    // 接收评论id 昵称 parentid
+    async reply(id, nickname) {
+      this.isShow = false
+      await this.$nextTick()
+      this.$refs.txtarea.focus()
+      this.commentId = id
+      this.commentNickname = nickname
     }
   }
 }
@@ -317,11 +357,17 @@ export default {
       border: 1px solid #333333;
     }
   }
+  // 底部样式
   .footer {
     .inputaa {
+      position: fixed;
+      bottom: 0;
+      height: 28px;
+      width: 90%;
       display: flex;
       justify-content: space-around;
       align-items: center;
+      background-color: #f2f2f2;
       .input {
         width: 181px;
         height: 28px;
@@ -360,7 +406,7 @@ export default {
       position: fixed;
       bottom: 0;
       width: 90%;
-
+      background-color: #f2f2f2;
       display: flex;
       align-items: flex-end;
       textarea {
@@ -384,6 +430,7 @@ export default {
   }
 }
 
+// 垫底的
 .empty {
   height: 28px;
 }
