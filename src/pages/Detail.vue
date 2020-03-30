@@ -125,6 +125,10 @@ export default {
     hmComments
   },
   methods: {
+    // 页面跳到顶部
+    // mounted() {
+    //   window.scrollTo(0, 0)
+    // },
     // 详情页数据
     async getDetail() {
       const id = this.$route.params.id
@@ -246,6 +250,7 @@ export default {
       this.$refs.txtarea.focus()
       this.commentId = id
       this.commentNickname = nickname
+      this.parentId = id
     }
   }
 }
@@ -253,15 +258,19 @@ export default {
 
 <style lang="less" scoped>
 .detail {
-  padding: 0 20px;
+  padding: 60px 20px 0;
   background-color: #f2f2f2;
   .header {
+    width: 90%;
+    background-color: #fff;
     height: 45px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px;
-
+    padding: 5px 100px 5px 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
     .logo {
       flex: 1;
       padding-left: 10px;

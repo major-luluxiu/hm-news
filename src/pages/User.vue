@@ -32,6 +32,8 @@
       content="文章"
       @click="$router.push('/favorite')"
     ></hm-navbar>
+    <hm-navbar title="首页" @click="$router.push('/')"></hm-navbar>
+    <hm-navbar title="热点管理" @click="$router.push('/tab')"></hm-navbar>
     <hm-navbar title="设置" @click="$router.push('/edit')"></hm-navbar>
     <hm-navbar title="退出" @click="logout"></hm-navbar>
   </div>

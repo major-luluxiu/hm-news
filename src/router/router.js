@@ -13,6 +13,7 @@ import Myfavorite from "../pages/Myfavorite.vue"
 import Home from "../pages/Home.vue"
 import Search from "../pages/Search.vue"
 import Detail from "../pages/Detail.vue"
+import TabEdit from "../pages/tabEdit.vue"
 
 const router = new VueRouter({
   routes: [
@@ -25,7 +26,8 @@ const router = new VueRouter({
     { path: "/comment", name: "comment", component: Comment },
     { path: "/favorite", name: "favorite", component: Myfavorite },
     { path: "/search", name: "search", component: Search },
-    { path: "/detail/:id", name: "detail", component: Detail }
+    { path: "/detail/:id", name: "detail", component: Detail },
+    { path: "/tab", name: "tab", component: TabEdit }
   ]
 })
 
