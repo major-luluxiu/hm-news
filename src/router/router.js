@@ -32,7 +32,7 @@ const router = new VueRouter({
 })
 
 // 将所有需要权限的路由放到数组中
-const authURL = ["/user", "/edit", "/follows", "/favorite"]
+const authURL = ["/user", "/edit", "/follows", "/favorite", "/search"]
 
 router.beforeEach(function(to, from, next) {
   const token = localStorage.getItem("token")

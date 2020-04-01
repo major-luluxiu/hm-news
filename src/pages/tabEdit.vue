@@ -64,7 +64,7 @@ export default {
     // 增加频道
     addTab(id) {
       console.log(id)
-      const index = this.add.findIndex(item => (item.id = id))
+      const index = this.add.findIndex(item => item.id === id)
       this.del.push(this.add[index])
       this.add.splice(index, 1)
     }

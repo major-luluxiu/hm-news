@@ -66,6 +66,8 @@
 </template>
 
 <script>
+import _ from "lodash"
+
 export default {
   data() {
     return {
@@ -93,8 +95,7 @@ export default {
   },
   methods: {
     // 新闻列表
-    async search(value) {
-      this.keyword = value
+    async search() {
       this.history = this.history.filter(item => item !== this.keyword)
       this.history.unshift(this.keyword)
       localStorage.setItem("history", JSON.stringify(this.history))
@@ -123,7 +124,7 @@ export default {
       }
     },
     //推荐列表
-    async recmend() {
+    recmend: _.debounce(async function() {
       if (!this.keyword) {
         return
       }
@@ -135,7 +136,7 @@ export default {
       const { statusCode, data } = res.data
       this.recmendList = data
       console.log(this.recmendList)
-    }
+    }, 500)
   },
 
   watch: {

@@ -117,18 +117,18 @@ export default {
       commentNickname: ""
     }
   },
+  // 页面跳到顶部
   created() {
     this.getDetail()
     this.getComments()
+  },
+  mounted() {
+    window.scrollTo(0, 0)
   },
   components: {
     hmComments
   },
   methods: {
-    // 页面跳到顶部
-    // mounted() {
-    //   window.scrollTo(0, 0)
-    // },
     // 详情页数据
     async getDetail() {
       const id = this.$route.params.id
